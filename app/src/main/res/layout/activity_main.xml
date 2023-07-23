@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#191A1F"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
     <RelativeLayout
         android:id="@+id/topBar"
@@ -45,12 +46,10 @@
                 android:layout_weight="1"
                 android:ems="5"
                 android:hint="search"
-                android:textColorHint="@color/white"
+                android:textColorHint="#DCDCDC"
                 android:textColor="@color/white"
-                android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:backgroundTint="@color/white"
-                tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck,TextContrastCheck" />
+                />
             <Button
                 android:id="@+id/btnSearch"
                 android:layout_width="1dp"
@@ -58,7 +57,8 @@
                 android:layout_weight="1"
                 android:onClick="btnGetInfoOnClick"
                 app:backgroundTint="#7960E6"
-                android:text="SEARCH" />
+                android:text="SEARCH" >
+            </Button>
         </LinearLayout>
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
@@ -77,38 +77,6 @@
         android:orientation="vertical"
         android:layout_alignParentBottom="true"
         >
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/startTime"
-                android:layout_marginStart="10dp"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="00.00"
-                android:textColor="@color/white"/>
-            <SeekBar
-                android:progressDrawable="@drawable/custom_seekbar"
-                android:progress="50"
-                android:max="100"
-                android:layout_toEndOf="@id/startTime"
-                android:layout_width="match_parent"
-                android:layout_toStartOf="@id/endTime"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/endTime"
-                android:layout_marginEnd="10dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="00.00"
-                android:textColor="@color/white"/>
-        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

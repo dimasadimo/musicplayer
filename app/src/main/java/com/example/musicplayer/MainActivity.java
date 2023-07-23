@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -102,18 +103,21 @@ public class MainActivity extends AppCompatActivity implements SongChangeListene
 
     @Override
     public void onChanged(int position) {
-        if(mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-            mediaPlayer.reset();
-        }
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mediaPlayer.pause();
+        mediaPlayer.reset();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    mediaPlayer.setDataSource(MainActivity.this, Uri.parse(results.get(position).getPreviewUrl()));
-                    mediaPlayer.prepare();
+                    mediaPlayer.setAudioAttributes(
+                            new AudioAttributes.Builder()
+                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                                    .build()
+                    );
+                    mediaPlayer.setDataSource(results.get(position).getPreviewUrl());
+                    mediaPlayer.prepareAsync();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -126,18 +130,22 @@ public class MainActivity extends AppCompatActivity implements SongChangeListene
                 if(isPlaying) {
                     isPlaying = false;
                     mediaPlayer.pause();
+                    playImg.setImageResource(R.drawable.play_icon);
                 } else {
                     isPlaying = true;
                     mediaPlayer.start();
+                    playImg.setImageResource(R.drawable.pause_icon);
                 }
             }
         });
 
-//        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//            @Override
-//            public void onPrepared(MediaPlayer mp) {
-//
-//            }
-//        });
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                isPlaying = true;
+                mp.start();
+                playImg.setImageResource(R.drawable.pause_icon);
+            }
+        });
     }
 }
